@@ -6,7 +6,7 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="h-screen w-screen flex flex-col bg-gray-200">
+    <div className="h-screen w-screen flex flex-col bg-gray-100">
       <Navbar />
 
       <main className="container m-auto h-screen pt-3">{children}</main>

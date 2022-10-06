@@ -15,7 +15,7 @@ const Navbar: FC = () => {
         <Link href="/">
           <a className="flex items-center">
             <Image src={logo} alt="Next Nba App Logo" width={35} height={35} />
-            <span className=" ml-5 self-center text-xl font-semibold whitespace-nowrap ">NBA APP</span>
+            <span className=" ml-5 self-center text-xl font-bold text-primary-700 whitespace-nowrap ">NBA APP</span>
           </a>
         </Link>
         <div className="w-auto">
@@ -24,8 +24,8 @@ const Navbar: FC = () => {
               <Link href="/">
                 <a
                   className={classNames(
-                    'block text-gray-700 rounded hover:bg-gray-100 hover:bg-transparent border-0 hover:text-blue-700 p-0',
-                    router.pathname == '/' && 'text-blue-700'
+                    'block text-gray-700 rounded hover:bg-gray-100 hover:bg-transparent border-0 hover:text-primary-700 hover:font-bold p-0',
+                    router.pathname == '/' && 'text-primary-400 font-bold'
                   )}
                   aria-current="page"
                 >
