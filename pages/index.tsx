@@ -12,13 +12,20 @@ const Home: NextPage = () => {
 
       <ul className="w-auto text-2xl font-medium text-gray-900 bg-white rounded-lg border border-gray-200">
         <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 hover:text-primary-700">
-          <Link href="/api-teams">
-            <a>Server side: Api Teams</a>
+          <Link href="/server-teams">
+            <a>Server side: Teams</a>
           </Link>
         </li>
-        <li className="py-2 px-4 w-full border-b border-gray-200 hover:text-primary-700">Settings</li>
-        <li className="py-2 px-4 w-full border-b border-gray-200 hover:text-primary-700">Messages</li>
-        <li className="py-2 px-4 w-full rounded-b-lg hover:text-primary-700">Download</li>
+        <li className="py-2 px-4 w-full border-b border-gray-200 hover:text-primary-700">
+          <Link href="/static-teams">
+            <a>Static site generation: Teams</a>
+          </Link>
+        </li>
+        <li className="py-2 px-4 w-full border-b border-gray-200 hover:text-primary-700">
+          <Link href="/client-teams">
+            <a>Client side: Teams</a>
+          </Link>
+        </li>
       </ul>
     </>
   );

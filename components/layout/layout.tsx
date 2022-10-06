@@ -6,10 +6,10 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="h-screen w-screen flex flex-col bg-gray-100">
+    <div className="h-auto w-screen min-h-full flex flex-col bg-gray-100">
       <Navbar />
 
-      <main className="container m-auto h-screen pt-3">{children}</main>
+      <main className="container mx-auto my-0 h-full py-3">{children}</main>
     </div>
   );
 };
