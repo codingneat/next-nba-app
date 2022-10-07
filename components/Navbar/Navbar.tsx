@@ -24,12 +24,38 @@ const Navbar: FC = () => {
               <Link href="/">
                 <a
                   className={classNames(
-                    'block text-gray-700 rounded hover:bg-gray-100 hover:bg-transparent border-0 hover:text-primary-700 hover:font-bold p-0',
+                    'block text-gray-700 rounded hover:bg-gray-100 hover:bg-transparent border-0 hover:text-primary-700 p-0',
                     router.pathname == '/' && 'text-primary-400 font-bold'
                   )}
                   aria-current="page"
                 >
                   Home
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/teams">
+                <a
+                  className={classNames(
+                    'block text-gray-700 rounded hover:bg-gray-100 hover:bg-transparent border-0 hover:text-primary-700 p-0',
+                    router.pathname == '/teams' && 'text-primary-400 font-bold'
+                  )}
+                  aria-current="page"
+                >
+                  Teams
+                </a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/players">
+                <a
+                  className={classNames(
+                    'block text-gray-700 rounded hover:bg-gray-100 hover:bg-transparent border-0 hover:text-primary-700 p-0',
+                    router.pathname == '/players' && 'text-primary-400 font-bold'
+                  )}
+                  aria-current="page"
+                >
+                  Players
                 </a>
               </Link>
             </li>

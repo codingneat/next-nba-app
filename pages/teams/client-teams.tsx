@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import TeamsTable from '../components/teams-table/teams-table';
+import TeamsTable from '../../components/teams-table/teams-table';
 
 import type { NextPage } from 'next';
-import { Team } from '../types/nba.types';
+import { Team } from '../../types/nba.types';
 
 const ClientTeams: NextPage = () => {
   const [teams, setTeams] = useState<Team[]>([]);

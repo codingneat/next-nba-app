@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 
-import TeamsTable from '../components/teams-table/teams-table';
-import { API_TEAMS_URL } from '../constants/nba.constants';
-import { TeamsProps } from '../types/nba.types';
-import { parseApiTeams } from '../utils/api.utils';
+import TeamsTable from '../../components/teams-table/teams-table';
+import { API_TEAMS_URL } from '../../constants/nba.constants';
+import { TeamsProps } from '../../types/nba.types';
+import { parseApiTeams } from '../../utils/api.utils';
 
 const ApiTeams: NextPage<TeamsProps> = ({ teams }) => {
   return <TeamsTable teams={teams} />;
@@ -11,7 +11,7 @@ const ApiTeams: NextPage<TeamsProps> = ({ teams }) => {
 
 export default ApiTeams;
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const response = await fetch(API_TEAMS_URL);
   const { data } = await response.json();
 

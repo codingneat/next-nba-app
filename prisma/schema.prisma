@@ -1,0 +1,858 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model arena {
+  id           Int     @id @default(autoincrement())
+  arena        String? @db.VarChar(255)
+  cityId       Int?
+  cityName     String? @db.VarChar(255)
+  capacity     Int?
+  timeZoneText String? @db.VarChar(255)
+  teamId       Int?
+  city         city?   @relation(fields: [cityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "arena_ibfk_1")
+  team         team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "arena_ibfk_2")
+
+  @@index([cityId], map: "ix_arena_cityId")
+  @@index([teamId], map: "ix_arena_teamId")
+}
+
+model boxscore {
+  id              Int      @id @default(autoincrement())
+  gameId          String?  @db.VarChar(255)
+  teamId          Int?
+  isStartersBench Boolean?
+  startersBench   String?  @db.VarChar(255)
+  min             Int?
+  fgm             Float?   @db.Float
+  fga             Float?   @db.Float
+  fgPct           Float?   @db.Float
+  fg3m            Float?   @db.Float
+  fg3a            Float?   @db.Float
+  fg3Pct          Float?   @db.Float
+  ftm             Float?   @db.Float
+  fta             Float?   @db.Float
+  ftPct           Float?   @db.Float
+  oReb            Float?   @db.Float
+  dReb            Float?   @db.Float
+  reb             Float?   @db.Float
+  ast             Float?   @db.Float
+  stl             Float?   @db.Float
+  blk             Float?   @db.Float
+  to              Float?   @db.Float
+  pf              Float?   @db.Float
+  pts             Float?   @db.Float
+  plusMinus       Float?   @db.Float
+  game            game?    @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscore_ibfk_1")
+  team            team?    @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscore_ibfk_2")
+
+  @@index([gameId], map: "ix_boxscore_gameId")
+  @@index([teamId], map: "ix_boxscore_teamId")
+}
+
+model boxscoreAdvanced {
+  id         Int     @id @default(autoincrement())
+  gameId     String? @db.VarChar(255)
+  teamId     Int?
+  min        Int?
+  eoffRating Float?  @db.Float
+  offRating  Float?  @db.Float
+  edefRating Float?  @db.Float
+  defRating  Float?  @db.Float
+  enetRating Float?  @db.Float
+  netRating  Float?  @db.Float
+  astPct     Float?  @db.Float
+  astTov     Float?  @db.Float
+  astRatio   Float?  @db.Float
+  oRebPct    Float?  @db.Float
+  dRebPct    Float?  @db.Float
+  rebPct     Float?  @db.Float
+  tmTovPct   Float?  @db.Float
+  efgPct     Float?  @db.Float
+  tsPct      Float?  @db.Float
+  usgPct     Float?  @db.Float
+  eusgPct    Float?  @db.Float
+  epace      Float?  @db.Float
+  pace       Float?  @db.Float
+  pacePer40  Float?  @db.Float
+  poss       Float?  @db.Float
+  pie        Float?  @db.Float
+  game       game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreadvanced_ibfk_1")
+  team       team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreadvanced_ibfk_2")
+
+  @@index([gameId], map: "ix_boxscoreAdvanced_gameId")
+  @@index([teamId], map: "ix_boxscoreAdvanced_teamId")
+}
+
+model boxscoreAdvancedPlayer {
+  id            Int     @id @default(autoincrement())
+  gameId        String? @db.VarChar(255)
+  teamId        Int?
+  playerId      Int?
+  startPosition String? @db.VarChar(255)
+  min           Int?
+  eoffRating    Float?  @db.Float
+  offRating     Float?  @db.Float
+  edefRating    Float?  @db.Float
+  defRating     Float?  @db.Float
+  enetRating    Float?  @db.Float
+  netRating     Float?  @db.Float
+  astPct        Float?  @db.Float
+  astTov        Float?  @db.Float
+  astRatio      Float?  @db.Float
+  oRebPct       Float?  @db.Float
+  dRebPct       Float?  @db.Float
+  rebPct        Float?  @db.Float
+  tmTovPct      Float?  @db.Float
+  efgPct        Float?  @db.Float
+  tsPct         Float?  @db.Float
+  usgPct        Float?  @db.Float
+  eusgPct       Float?  @db.Float
+  epace         Float?  @db.Float
+  pace          Float?  @db.Float
+  pacePer40     Float?  @db.Float
+  poss          Float?  @db.Float
+  pie           Float?  @db.Float
+  game          game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreadvancedplayer_ibfk_1")
+  team          team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreadvancedplayer_ibfk_2")
+  player        player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreadvancedplayer_ibfk_3")
+
+  @@index([gameId], map: "ix_boxscoreAdvancedPlayer_gameId")
+  @@index([playerId], map: "ix_boxscoreAdvancedPlayer_playerId")
+  @@index([teamId], map: "ix_boxscoreAdvancedPlayer_teamId")
+}
+
+model boxscoreFourFactors {
+  id         Int     @id @default(autoincrement())
+  gameId     String? @db.VarChar(255)
+  teamId     Int?
+  min        Int?
+  efgPct     Float?  @db.Float
+  ftaRate    Float?  @db.Float
+  tmTovPct   Float?  @db.Float
+  oRebPct    Float?  @db.Float
+  oppEfgPct  Float?  @db.Float
+  oppFtaRate Float?  @db.Float
+  oppTovPct  Float?  @db.Float
+  oppOrebPct Float?  @db.Float
+  game       game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorefourfactors_ibfk_1")
+  team       team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorefourfactors_ibfk_2")
+
+  @@index([gameId], map: "ix_boxscoreFourFactors_gameId")
+  @@index([teamId], map: "ix_boxscoreFourFactors_teamId")
+}
+
+model boxscoreFourFactorsPlayer {
+  id            Int     @id @default(autoincrement())
+  gameId        String? @db.VarChar(255)
+  teamId        Int?
+  playerId      Int?
+  startPosition String? @db.VarChar(255)
+  min           Int?
+  efgPct        Float?  @db.Float
+  ftaRate       Float?  @db.Float
+  tmTovPct      Float?  @db.Float
+  oRebPct       Float?  @db.Float
+  oppEfgPct     Float?  @db.Float
+  oppFtaRate    Float?  @db.Float
+  oppTovPct     Float?  @db.Float
+  oppOrebPct    Float?  @db.Float
+  game          game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorefourfactorsplayer_ibfk_1")
+  team          team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorefourfactorsplayer_ibfk_2")
+  player        player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorefourfactorsplayer_ibfk_3")
+
+  @@index([gameId], map: "ix_boxscoreFourFactorsPlayer_gameId")
+  @@index([playerId], map: "ix_boxscoreFourFactorsPlayer_playerId")
+  @@index([teamId], map: "ix_boxscoreFourFactorsPlayer_teamId")
+}
+
+model boxscoreGameSummary {
+  id             Int     @id @default(autoincrement())
+  gameId         String? @db.VarChar(255)
+  teamId         Int?
+  score          Int?
+  ptsPaint       Int?
+  pts2ndChance   Int?
+  ptsFb          Int?
+  largestlead    Int?
+  teamTurnovers  Int?
+  totalTurnovers Int?
+  teamRebounds   Int?
+  ptsOffTo       Int?
+  leadChanges    Int?
+  timesTied      Int?
+  teamWinsLosses String? @db.VarChar(255)
+  ptsQtr1        Int?
+  ptsQtr2        Int?
+  ptsQtr3        Int?
+  ptsQtr4        Int?
+  ptsOt1         Int?
+  ptsOt2         Int?
+  ptsOt3         Int?
+  ptsOt4         Int?
+  ptsOt5         Int?
+  ptsOt6         Int?
+  ptsOt7         Int?
+  ptsOt8         Int?
+  ptsOt9         Int?
+  ptsOt10        Int?
+  pts            Int?
+  game           game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoregamesummary_ibfk_1")
+  team           team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoregamesummary_ibfk_2")
+
+  @@index([gameId], map: "ix_boxscoreGameSummary_gameId")
+  @@index([teamId], map: "ix_boxscoreGameSummary_teamId")
+}
+
+model boxscoreMisc {
+  id              Int     @id @default(autoincrement())
+  gameId          String? @db.VarChar(255)
+  teamId          Int?
+  min             Int?
+  ptsOffTov       Float?  @db.Float
+  pts2ndChance    Float?  @db.Float
+  ptsFb           Float?  @db.Float
+  ptsPaint        Float?  @db.Float
+  oppPtsOffTov    Float?  @db.Float
+  oppPts2ndChance Float?  @db.Float
+  oppPtsFb        Float?  @db.Float
+  oppPtsPaint     Float?  @db.Float
+  blk             Float?  @db.Float
+  blkA            Float?  @db.Float
+  pf              Float?  @db.Float
+  pfd             Float?  @db.Float
+  game            game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoremisc_ibfk_1")
+  team            team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoremisc_ibfk_2")
+
+  @@index([gameId], map: "ix_boxscoreMisc_gameId")
+  @@index([teamId], map: "ix_boxscoreMisc_teamId")
+}
+
+model boxscoreMiscPlayer {
+  id              Int     @id @default(autoincrement())
+  gameId          String? @db.VarChar(255)
+  teamId          Int?
+  playerId        Int?
+  startPosition   String? @db.VarChar(255)
+  min             Int?
+  ptsOffTov       Float?  @db.Float
+  pts2ndChance    Float?  @db.Float
+  ptsFb           Float?  @db.Float
+  ptsPaint        Float?  @db.Float
+  oppPtsOffTov    Float?  @db.Float
+  oppPts2ndChance Float?  @db.Float
+  oppPtsFb        Float?  @db.Float
+  oppPtsPaint     Float?  @db.Float
+  blk             Float?  @db.Float
+  blkA            Float?  @db.Float
+  pf              Float?  @db.Float
+  pfd             Float?  @db.Float
+  game            game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoremiscplayer_ibfk_1")
+  team            team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoremiscplayer_ibfk_2")
+  player          player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoremiscplayer_ibfk_3")
+
+  @@index([gameId], map: "ix_boxscoreMiscPlayer_gameId")
+  @@index([playerId], map: "ix_boxscoreMiscPlayer_playerId")
+  @@index([teamId], map: "ix_boxscoreMiscPlayer_teamId")
+}
+
+model boxscorePlayer {
+  id            Int     @id @default(autoincrement())
+  gameId        String? @db.VarChar(255)
+  teamId        Int?
+  playerId      Int?
+  startPosition String? @db.VarChar(255)
+  min           Int?
+  fgm           Float?  @db.Float
+  fga           Float?  @db.Float
+  fgPct         Float?  @db.Float
+  fg3m          Float?  @db.Float
+  fg3a          Float?  @db.Float
+  fg3Pct        Float?  @db.Float
+  ftm           Float?  @db.Float
+  fta           Float?  @db.Float
+  ftPct         Float?  @db.Float
+  oReb          Float?  @db.Float
+  dReb          Float?  @db.Float
+  reb           Float?  @db.Float
+  ast           Float?  @db.Float
+  stl           Float?  @db.Float
+  blk           Float?  @db.Float
+  to            Float?  @db.Float
+  pf            Float?  @db.Float
+  pts           Float?  @db.Float
+  plusMinus     Float?  @db.Float
+  game          game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreplayer_ibfk_1")
+  team          team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreplayer_ibfk_2")
+  player        player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreplayer_ibfk_3")
+
+  @@index([gameId], map: "ix_boxscorePlayer_gameId")
+  @@index([playerId], map: "ix_boxscorePlayer_playerId")
+  @@index([teamId], map: "ix_boxscorePlayer_teamId")
+}
+
+model boxscoreScoring {
+  id           Int     @id @default(autoincrement())
+  gameId       String? @db.VarChar(255)
+  teamId       Int?
+  min          Int?
+  pctFga2pt    Float?  @db.Float
+  pctFga3pt    Float?  @db.Float
+  pctPts2pt    Float?  @db.Float
+  pctPts2ptMr  Float?  @db.Float
+  pctPts3pt    Float?  @db.Float
+  pctPtsFb     Float?  @db.Float
+  pctPtsFt     Float?  @db.Float
+  pctPtsOffTov Float?  @db.Float
+  pctPtsPaint  Float?  @db.Float
+  pctAst2pm    Float?  @db.Float
+  pctUast2pm   Float?  @db.Float
+  pctAst3pm    Float?  @db.Float
+  pctUast3pm   Float?  @db.Float
+  pctAstFgm    Float?  @db.Float
+  pctUastFgm   Float?  @db.Float
+  game         game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorescoring_ibfk_1")
+  team         team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorescoring_ibfk_2")
+
+  @@index([gameId], map: "ix_boxscoreScoring_gameId")
+  @@index([teamId], map: "ix_boxscoreScoring_teamId")
+}
+
+model boxscoreScoringPlayer {
+  id            Int     @id @default(autoincrement())
+  gameId        String? @db.VarChar(255)
+  teamId        Int?
+  playerId      Int?
+  startPosition String? @db.VarChar(255)
+  min           Int?
+  pctFga2pt     Float?  @db.Float
+  pctFga3pt     Float?  @db.Float
+  pctPts2pt     Float?  @db.Float
+  pctPts2ptMr   Float?  @db.Float
+  pctPts3pt     Float?  @db.Float
+  pctPtsFb      Float?  @db.Float
+  pctPtsFt      Float?  @db.Float
+  pctPtsOffTov  Float?  @db.Float
+  pctPtsPaint   Float?  @db.Float
+  pctAst2pm     Float?  @db.Float
+  pctUast2pm    Float?  @db.Float
+  pctAst3pm     Float?  @db.Float
+  pctUast3pm    Float?  @db.Float
+  pctAstFgm     Float?  @db.Float
+  pctUastFgm    Float?  @db.Float
+  game          game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorescoringplayer_ibfk_1")
+  team          team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorescoringplayer_ibfk_2")
+  player        player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscorescoringplayer_ibfk_3")
+
+  @@index([gameId], map: "ix_boxscoreScoringPlayer_gameId")
+  @@index([playerId], map: "ix_boxscoreScoringPlayer_playerId")
+  @@index([teamId], map: "ix_boxscoreScoringPlayer_teamId")
+}
+
+model boxscoreUsage {
+  id      Int     @id @default(autoincrement())
+  gameId  String? @db.VarChar(255)
+  teamId  Int?
+  min     Int?
+  usgPct  Float?  @db.Float
+  pctFgm  Float?  @db.Float
+  pctFga  Float?  @db.Float
+  pctFg3m Float?  @db.Float
+  pctFg3a Float?  @db.Float
+  pctFtm  Float?  @db.Float
+  pctFta  Float?  @db.Float
+  pctOreb Float?  @db.Float
+  pctDreb Float?  @db.Float
+  pctReb  Float?  @db.Float
+  pctAst  Float?  @db.Float
+  pctTov  Float?  @db.Float
+  pctStl  Float?  @db.Float
+  pctBlk  Float?  @db.Float
+  pctBlka Float?  @db.Float
+  pctPf   Float?  @db.Float
+  pctPfd  Float?  @db.Float
+  pctPts  Float?  @db.Float
+  game    game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreusage_ibfk_1")
+  team    team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreusage_ibfk_2")
+
+  @@index([gameId], map: "ix_boxscoreUsage_gameId")
+  @@index([teamId], map: "ix_boxscoreUsage_teamId")
+}
+
+model boxscoreUsagePlayer {
+  id            Int     @id @default(autoincrement())
+  gameId        String? @db.VarChar(255)
+  teamId        Int?
+  playerId      Int?
+  startPosition String? @db.VarChar(255)
+  min           Int?
+  usgPct        Float?  @db.Float
+  pctFgm        Float?  @db.Float
+  pctFga        Float?  @db.Float
+  pctFg3m       Float?  @db.Float
+  pctFg3a       Float?  @db.Float
+  pctFtm        Float?  @db.Float
+  pctFta        Float?  @db.Float
+  pctOreb       Float?  @db.Float
+  pctDreb       Float?  @db.Float
+  pctReb        Float?  @db.Float
+  pctAst        Float?  @db.Float
+  pctTov        Float?  @db.Float
+  pctStl        Float?  @db.Float
+  pctBlk        Float?  @db.Float
+  pctBlka       Float?  @db.Float
+  pctPf         Float?  @db.Float
+  pctPfd        Float?  @db.Float
+  pctPts        Float?  @db.Float
+  game          game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreusageplayer_ibfk_1")
+  team          team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreusageplayer_ibfk_2")
+  player        player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "boxscoreusageplayer_ibfk_3")
+
+  @@index([gameId], map: "ix_boxscoreUsagePlayer_gameId")
+  @@index([playerId], map: "ix_boxscoreUsagePlayer_playerId")
+  @@index([teamId], map: "ix_boxscoreUsagePlayer_teamId")
+}
+
+model championshipOdd {
+  id         Int     @id @default(autoincrement())
+  teamId     Int?
+  odd        Int?
+  seasonYear Int?    @db.SmallInt
+  type       String? @db.VarChar(255)
+  team       team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "championshipodd_ibfk_1")
+
+  @@index([teamId], map: "ix_championshipOdd_teamId")
+}
+
+model city {
+  id          Int           @id @default(autoincrement())
+  name        String?       @db.VarChar(255)
+  arena       arena[]
+  team        team[]
+  teamHistory teamHistory[]
+}
+
+model coach {
+  id          String        @id @db.VarChar(255)
+  firstName   String?       @db.VarChar(255)
+  lastName    String?       @db.VarChar(255)
+  coachName   String?       @db.VarChar(255)
+  coachCode   String?       @db.VarChar(255)
+  school      String?       @db.VarChar(255)
+  rosterCoach rosterCoach[]
+}
+
+model draft {
+  id               Int     @id @default(autoincrement())
+  teamId           Int?
+  teamName         String? @db.VarChar(255)
+  playerId         Int?
+  playerName       String? @db.VarChar(255)
+  season           Int?
+  roundNumber      Int?
+  roundPick        Int?
+  overallPick      Int?
+  city             String? @db.VarChar(255)
+  organization     String? @db.VarChar(255)
+  organizationType String? @db.VarChar(255)
+  team             team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "draft_ibfk_1")
+  player           player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "draft_ibfk_2")
+
+  @@index([playerId], map: "ix_draft_playerId")
+  @@index([teamId], map: "ix_draft_teamId")
+}
+
+model game {
+  id                        String                      @id @db.VarChar(255)
+  gameDateEst               DateTime?                   @db.Date
+  gameCode                  String?                     @db.VarChar(255)
+  gameSequence              Int?
+  hTeamId                   Int?
+  vTeamId                   Int?
+  hTeamScore                Int?                        @db.SmallInt
+  vTeamScore                Int?                        @db.SmallInt
+  seasonYear                Int?                        @db.SmallInt
+  gameDate                  String?                     @db.VarChar(255)
+  attendance                Int?
+  gameTime                  String?                     @db.VarChar(255)
+  leadChanges               Int?
+  timesTied                 Int?
+  min                       Int?
+  previousGameId            String?                     @db.VarChar(255)
+  team_game_hTeamIdToteam   team?                       @relation("game_hTeamIdToteam", fields: [hTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_1")
+  team_game_vTeamIdToteam   team?                       @relation("game_vTeamIdToteam", fields: [vTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_2")
+  boxscore                  boxscore[]
+  boxscoreAdvanced          boxscoreAdvanced[]
+  boxscoreAdvancedPlayer    boxscoreAdvancedPlayer[]
+  boxscoreFourFactors       boxscoreFourFactors[]
+  boxscoreFourFactorsPlayer boxscoreFourFactorsPlayer[]
+  boxscoreGameSummary       boxscoreGameSummary[]
+  boxscoreMisc              boxscoreMisc[]
+  boxscoreMiscPlayer        boxscoreMiscPlayer[]
+  boxscorePlayer            boxscorePlayer[]
+  boxscoreScoring           boxscoreScoring[]
+  boxscoreScoringPlayer     boxscoreScoringPlayer[]
+  boxscoreUsage             boxscoreUsage[]
+  boxscoreUsagePlayer       boxscoreUsagePlayer[]
+  inactivePlayer            inactivePlayer[]            @ignore
+  officerGame               officerGame[]               @ignore
+  play                      play[]
+  shotchart                 shotchart[]
+
+  @@index([hTeamId], map: "ix_game_hTeamId")
+  @@index([vTeamId], map: "ix_game_vTeamId")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model inactivePlayer {
+  gameId   String? @db.VarChar(255)
+  playerId Int?
+  game     game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "inactiveplayer_ibfk_1")
+  player   player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "inactiveplayer_ibfk_2")
+
+  @@index([gameId], map: "gameId")
+  @@index([playerId], map: "playerId")
+  @@ignore
+}
+
+model officer {
+  id          Int           @id
+  firstName   String?       @db.VarChar(255)
+  lastName    String?       @db.VarChar(255)
+  jersey      String?       @db.VarChar(255)
+  officerGame officerGame[] @ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model officerGame {
+  gameId    String?  @db.VarChar(255)
+  officerId Int?
+  game      game?    @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "officergame_ibfk_1")
+  officer   officer? @relation(fields: [officerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "officergame_ibfk_2")
+
+  @@index([gameId], map: "gameId")
+  @@index([officerId], map: "officerId")
+  @@ignore
+}
+
+model play {
+  id                            Int     @id @default(autoincrement())
+  gameId                        String? @db.VarChar(255)
+  eventNum                      Int?
+  eventMsgType                  Int?
+  eventMsgActionType            Int?
+  period                        Int?
+  wcTimeSring                   String? @db.VarChar(255)
+  pcTimeSring                   String? @db.VarChar(255)
+  homeDescription               String? @db.VarChar(255)
+  neutralDescription            String? @db.VarChar(255)
+  visitorDescription            String? @db.VarChar(255)
+  score                         String? @db.VarChar(255)
+  scoreMargin                   String? @db.VarChar(255)
+  player1Id                     Int?
+  player1Type                   Int?
+  team1Id                       Int?
+  player2Id                     Int?
+  player2Type                   Int?
+  team2Id                       Int?
+  player3Id                     Int?
+  player3Type                   Int?
+  team3Id                       Int?
+  game                          game?   @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "play_ibfk_1")
+  player_play_player1IdToplayer player? @relation("play_player1IdToplayer", fields: [player1Id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "play_ibfk_2")
+  team_play_team1IdToteam       team?   @relation("play_team1IdToteam", fields: [team1Id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "play_ibfk_3")
+  player_play_player2IdToplayer player? @relation("play_player2IdToplayer", fields: [player2Id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "play_ibfk_4")
+  team_play_team2IdToteam       team?   @relation("play_team2IdToteam", fields: [team2Id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "play_ibfk_5")
+  player_play_player3IdToplayer player? @relation("play_player3IdToplayer", fields: [player3Id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "play_ibfk_6")
+  team_play_team3IdToteam       team?   @relation("play_team3IdToteam", fields: [team3Id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "play_ibfk_7")
+
+  @@index([gameId], map: "ix_play_gameId")
+  @@index([player1Id], map: "ix_play_player1Id")
+  @@index([player2Id], map: "ix_play_player2Id")
+  @@index([player3Id], map: "ix_play_player3Id")
+  @@index([team1Id], map: "ix_play_team1Id")
+  @@index([team2Id], map: "ix_play_team2Id")
+  @@index([team3Id], map: "ix_play_team3Id")
+}
+
+model player {
+  id                          Int                         @id
+  firstName                   String?                     @db.VarChar(255)
+  lastName                    String?                     @db.VarChar(255)
+  birthday                    DateTime?                   @db.Date
+  school                      String?                     @db.VarChar(255)
+  country                     String?                     @db.VarChar(255)
+  lastAffiliation             String?                     @db.Text
+  position                    String?                     @db.VarChar(255)
+  isActive                    Boolean?
+  teamId                      Int?
+  team                        team?                       @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "player_ibfk_1")
+  boxscoreAdvancedPlayer      boxscoreAdvancedPlayer[]
+  boxscoreFourFactorsPlayer   boxscoreFourFactorsPlayer[]
+  boxscoreMiscPlayer          boxscoreMiscPlayer[]
+  boxscorePlayer              boxscorePlayer[]
+  boxscoreScoringPlayer       boxscoreScoringPlayer[]
+  boxscoreUsagePlayer         boxscoreUsagePlayer[]
+  draft                       draft[]
+  inactivePlayer              inactivePlayer[]            @ignore
+  play_play_player1IdToplayer play[]                      @relation("play_player1IdToplayer")
+  play_play_player2IdToplayer play[]                      @relation("play_player2IdToplayer")
+  play_play_player3IdToplayer play[]                      @relation("play_player3IdToplayer")
+  playerDetail                playerDetail[]
+  rosterPlayer                rosterPlayer[]
+  shotchart                   shotchart[]
+
+  @@index([teamId], map: "ix_player_teamId")
+}
+
+model playerDetail {
+  id                    Int      @id @default(autoincrement())
+  playerId              Int?
+  displayFirstLast      String?  @db.VarChar(255)
+  displayLastCommaFirst String?  @db.VarChar(255)
+  displayFiLast         String?  @db.VarChar(255)
+  height                String?  @db.VarChar(255)
+  weight                String?  @db.VarChar(255)
+  seasonExperience      Int?
+  jersey                String?  @db.VarChar(255)
+  playerCode            String?  @db.VarChar(255)
+  nbaDebutYear          Int?     @db.SmallInt
+  nbaToYear             Int?     @db.SmallInt
+  dLeagueFlag           Boolean?
+  gamesPlayedFlag       Boolean?
+  player                player?  @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "playerdetail_ibfk_1")
+
+  @@index([playerId], map: "ix_playerDetail_playerId")
+}
+
+model rosterCoach {
+  id          Int      @id @default(autoincrement())
+  teamId      Int?
+  coachId     String?  @db.VarChar(255)
+  season      Int?     @db.SmallInt
+  isAssistant Boolean?
+  coachType   String?  @db.VarChar(255)
+  school      String?  @db.VarChar(255)
+  team        team?    @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rostercoach_ibfk_1")
+  coach       coach?   @relation(fields: [coachId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rostercoach_ibfk_2")
+
+  @@index([coachId], map: "ix_rosterCoach_coachId")
+  @@index([teamId], map: "ix_rosterCoach_teamId")
+}
+
+model rosterPlayer {
+  id                          Int     @id @default(autoincrement())
+  teamId                      Int?
+  playerId                    Int?
+  season                      Int?    @db.SmallInt
+  leagueId                    String? @db.VarChar(255)
+  player                      String? @db.VarChar(255)
+  num                         Int?
+  position                    String? @db.VarChar(255)
+  height                      String? @db.VarChar(255)
+  weight                      String? @db.VarChar(255)
+  birthDate                   String? @db.VarChar(255)
+  age                         Int?
+  exp                         String? @db.VarChar(255)
+  school                      String? @db.VarChar(255)
+  team                        team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rosterplayer_ibfk_1")
+  player_playerTorosterPlayer player? @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "rosterplayer_ibfk_2")
+
+  @@index([playerId], map: "ix_rosterPlayer_playerId")
+  @@index([teamId], map: "ix_rosterPlayer_teamId")
+}
+
+model shotchart {
+  id                Int      @id @default(autoincrement())
+  gameId            String?  @db.VarChar(255)
+  teamId            Int?
+  playerId          Int?
+  period            Int?
+  gameEventId       Int?
+  minutesRemaining  Int?
+  secondsRemaining  Int?
+  eventType         String?  @db.VarChar(255)
+  actionType        String?  @db.VarChar(255)
+  shotType          String?  @db.VarChar(255)
+  shotZoneBasic     String?  @db.VarChar(255)
+  shotZoneArea      String?  @db.VarChar(255)
+  shotZoneRange     String?  @db.VarChar(255)
+  shotDistance      Int?
+  locX              Int?
+  locY              Int?
+  shotAttemptedFlag Int?
+  shotMadeFlag      Int?
+  gameDate          String?  @db.VarChar(255)
+  isPs              Boolean?
+  game              game?    @relation(fields: [gameId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "shotchart_ibfk_1")
+  team              team?    @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "shotchart_ibfk_2")
+  player            player?  @relation(fields: [playerId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "shotchart_ibfk_3")
+
+  @@index([gameId], map: "ix_shotchart_gameId")
+  @@index([playerId], map: "ix_shotchart_playerId")
+  @@index([teamId], map: "ix_shotchart_teamId")
+}
+
+model standing {
+  id                       Int      @id @default(autoincrement())
+  teamId                   Int?
+  season                   String?  @db.VarChar(255)
+  seasonStart              Int?     @db.SmallInt
+  seasonEnd                Int?     @db.SmallInt
+  conference               String?  @db.VarChar(255)
+  division                 String?  @db.VarChar(255)
+  conferenceRecord         String?  @db.VarChar(255)
+  playoffRank              Int?
+  clinchIndicator          String?  @db.VarChar(255)
+  divisionRecord           String?  @db.VarChar(255)
+  divisionRank             Int?
+  wins                     Int?
+  losses                   Int?
+  winPct                   Float?   @db.Float
+  leagueRank               Int?
+  record                   String?  @db.VarChar(255)
+  home                     String?  @db.VarChar(255)
+  road                     String?  @db.VarChar(255)
+  l10                      String?  @db.VarChar(255)
+  l10Home                  String?  @db.VarChar(255)
+  l10Road                  String?  @db.VarChar(255)
+  ot                       String?  @db.VarChar(255)
+  threePtsOrLess           String?  @db.VarChar(255)
+  tenPtsOrMore             String?  @db.VarChar(255)
+  longHomeStreak           Int?
+  strLongHomeStreak        String?  @db.VarChar(255)
+  longRoadStreak           Int?
+  strLongRoadStreak        String?  @db.VarChar(255)
+  longWinStreak            Int?
+  longLossStreak           Int?
+  currentHomeStreak        Int?
+  strCurrentHomeStreak     String?  @db.VarChar(255)
+  currentRoadStreak        Int?
+  strCurrentRoadStreak     String?  @db.VarChar(255)
+  currentStreak            Int?
+  strCurrentStreak         String?  @db.VarChar(255)
+  conferenceGamesBacks     Boolean?
+  divisionGamesBacks       Boolean?
+  clinchedConferenceTitles Boolean?
+  clinchedDivisionTitles   Boolean?
+  clinchedPlayoffBirths    Boolean?
+  eliminatedConferences    Boolean?
+  eliminatedDivisions      Boolean?
+  aheadAtHalf              String?  @db.VarChar(255)
+  behindAtHalf             String?  @db.VarChar(255)
+  tiedAtHalf               String?  @db.VarChar(255)
+  aheadAtThird             String?  @db.VarChar(255)
+  behindAtThird            String?  @db.VarChar(255)
+  tiedAtThird              String?  @db.VarChar(255)
+  score100PTS              String?  @db.VarChar(255)
+  oppScore100PTS           String?  @db.VarChar(255)
+  oppOver500               String?  @db.VarChar(255)
+  leadInFGPCT              String?  @db.VarChar(255)
+  leadInReb                String?  @db.VarChar(255)
+  fewerTurnovers           String?  @db.VarChar(255)
+  pointsPGs                Float?   @db.Float
+  oppPointsPGs             Float?   @db.Float
+  diffPointsPGs            Float?   @db.Float
+  vsEast                   String?  @db.VarChar(255)
+  vsAtlantic               String?  @db.VarChar(255)
+  vsCentral                String?  @db.VarChar(255)
+  vsSoutheast              String?  @db.VarChar(255)
+  vsWest                   String?  @db.VarChar(255)
+  vsNorthwest              String?  @db.VarChar(255)
+  vsPacific                String?  @db.VarChar(255)
+  vsSouthwest              String?  @db.VarChar(255)
+  jan                      String?  @db.VarChar(255)
+  feb                      String?  @db.VarChar(255)
+  mar                      String?  @db.VarChar(255)
+  apr                      String?  @db.VarChar(255)
+  may                      String?  @db.VarChar(255)
+  jun                      String?  @db.VarChar(255)
+  jul                      String?  @db.VarChar(255)
+  aug                      String?  @db.VarChar(255)
+  sep                      String?  @db.VarChar(255)
+  oct                      String?  @db.VarChar(255)
+  nov                      String?  @db.VarChar(255)
+  dec                      String?  @db.VarChar(255)
+  team                     team?    @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "standing_ibfk_1")
+
+  @@index([teamId], map: "ix_standing_teamId")
+}
+
+model team {
+  id                        Int                         @id
+  nickname                  String?                     @db.VarChar(255)
+  fullName                  String?                     @db.VarChar(255)
+  abbreviation              String?                     @db.VarChar(255)
+  cityId                    Int?
+  tricode                   String?                     @db.VarChar(255)
+  confName                  String?                     @db.VarChar(255)
+  divName                   String?                     @db.VarChar(255)
+  city                      city?                       @relation(fields: [cityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "team_ibfk_1")
+  arena                     arena[]
+  boxscore                  boxscore[]
+  boxscoreAdvanced          boxscoreAdvanced[]
+  boxscoreAdvancedPlayer    boxscoreAdvancedPlayer[]
+  boxscoreFourFactors       boxscoreFourFactors[]
+  boxscoreFourFactorsPlayer boxscoreFourFactorsPlayer[]
+  boxscoreGameSummary       boxscoreGameSummary[]
+  boxscoreMisc              boxscoreMisc[]
+  boxscoreMiscPlayer        boxscoreMiscPlayer[]
+  boxscorePlayer            boxscorePlayer[]
+  boxscoreScoring           boxscoreScoring[]
+  boxscoreScoringPlayer     boxscoreScoringPlayer[]
+  boxscoreUsage             boxscoreUsage[]
+  boxscoreUsagePlayer       boxscoreUsagePlayer[]
+  championshipOdd           championshipOdd[]
+  draft                     draft[]
+  game_game_hTeamIdToteam   game[]                      @relation("game_hTeamIdToteam")
+  game_game_vTeamIdToteam   game[]                      @relation("game_vTeamIdToteam")
+  play_play_team1IdToteam   play[]                      @relation("play_team1IdToteam")
+  play_play_team2IdToteam   play[]                      @relation("play_team2IdToteam")
+  play_play_team3IdToteam   play[]                      @relation("play_team3IdToteam")
+  player                    player[]
+  rosterCoach               rosterCoach[]
+  rosterPlayer              rosterPlayer[]
+  shotchart                 shotchart[]
+  standing                  standing[]
+  teamDetail                teamDetail[]
+  teamHistory               teamHistory[]
+
+  @@index([cityId], map: "ix_team_cityId")
+}
+
+model teamDetail {
+  id                 Int     @id @default(autoincrement())
+  teamId             Int?
+  altCityName        String? @db.VarChar(255)
+  yearFounded        Int?    @db.SmallInt
+  owner              String? @db.VarChar(255)
+  generalManager     String? @db.VarChar(255)
+  headCoach          String? @db.VarChar(255)
+  dLeagueAffiliation String? @db.VarChar(255)
+  team               team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "teamdetail_ibfk_1")
+
+  @@index([teamId], map: "ix_teamDetail_teamId")
+}
+
+model teamHistory {
+  id             Int     @id @default(autoincrement())
+  teamId         Int?
+  yearFounded    Int?    @db.SmallInt
+  yearActiveTill Int?    @db.SmallInt
+  nickname       String? @db.VarChar(255)
+  poAppearances  Int?    @db.SmallInt
+  divTitles      Int?    @db.SmallInt
+  confTitles     Int?    @db.SmallInt
+  leagueTitles   Int?    @db.SmallInt
+  cityId         Int?
+  team           team?   @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "teamhistory_ibfk_1")
+  city           city?   @relation(fields: [cityId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "teamhistory_ibfk_2")
+
+  @@index([cityId], map: "ix_teamHistory_cityId")
+  @@index([teamId], map: "ix_teamHistory_teamId")
+}
