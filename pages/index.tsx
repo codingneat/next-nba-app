@@ -33,7 +33,12 @@ const Home: NextPage = () => {
         </li>
         <li className="py-2 px-4 w-full border-b border-gray-200 hover:text-primary-700">
           <Link href="/players">
-            <a>Players: Server side</a>
+            <a>Players: Static site generation</a>
+          </Link>
+        </li>
+        <li className="py-2 px-4 w-full border-b border-gray-200 hover:text-primary-700">
+          <Link href="/players/959">
+            <a>Player Card Example: Static site generation</a>
           </Link>
         </li>
       </ul>

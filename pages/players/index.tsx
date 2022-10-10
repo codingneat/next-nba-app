@@ -17,7 +17,7 @@ const prisma = new PrismaClient();
 export const getServerSideProps = async () => {
   const players = await prisma.player.findMany({
     include: { team: true },
-    where: { country: 'Canada' },
+    // where: { country: 'Canada' },
     orderBy: [
       {
         birthday: 'desc',

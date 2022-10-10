@@ -1,4 +1,9 @@
-import { teamDetail as TeamDetail, player as Player, playerDetail as PlayerDetail } from '@prisma/client';
+import {
+  teamDetail as TeamDetail,
+  player as Player,
+  playerDetail as PlayerDetail,
+  rosterPlayer as RosterPlayer,
+} from '@prisma/client';
 
 export interface Team {
   id: string;
@@ -30,6 +35,7 @@ export interface PlayersProps {
   players: Player[];
 }
 
-export interface PlayerProps {
+export interface PlayerPageProps {
   playerDetail: PlayerDetail | null;
+  rosterPlayer: RosterPlayer | null;
 }

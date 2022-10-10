@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import Link from 'next/link';
 import { FC } from 'react';
+import Modal from '../games-modal/games-modal';
 
 import { PlayersProps } from '../../types/nba.types';
 

@@ -1,3 +1,4 @@
+
 import Image, { StaticImageData } from 'next/image';
 import { FC, useState } from 'react';
 
@@ -25,8 +26,8 @@ const PlayerCard: FC<any> = ({ playerDetail }) => {
         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 pb-5">
           {playerDetail?.player?.firstName} {playerDetail?.player?.lastName}
         </h5>
-        <div className="mb-3 font-normal text-gray-700 flex flex-col md:flex-row justify-around w-full">
-          <ul className="space-y-1 max-w-md list-disc list-inside text-gray-500 mb-1">
+        <div className="mb-3 font-normal text-gray-800 flex flex-col md:flex-row justify-around w-full">
+          <ul className="space-y-1 max-w-md list-disc list-inside mb-1">
             <li>
               School: <span className="font-bold">{playerDetail?.player?.school}</span>
             </li>
@@ -40,7 +41,7 @@ const PlayerCard: FC<any> = ({ playerDetail }) => {
               </span>
             </li>
           </ul>
-          <ul className="space-y-1 max-w-md list-disc list-inside text-gray-500 mb-1">
+          <ul className="space-y-1 max-w-md list-disc list-inside mb-1">
             <li>
               Height: <span className="font-bold">{playerDetail?.height}</span>
             </li>
@@ -51,7 +52,7 @@ const PlayerCard: FC<any> = ({ playerDetail }) => {
               Jersey: <span className="font-bold">{playerDetail?.jersey}</span>
             </li>
           </ul>
-          <ul className="space-y-1 max-w-md list-disc list-inside text-gray-500 mb-1">
+          <ul className="space-y-1 max-w-md list-disc list-inside mb-1">
             <li>
               Position: <span className="font-bold">{playerDetail?.player?.position}</span>
             </li>
