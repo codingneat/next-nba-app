@@ -1,9 +1,11 @@
+'use client';
+
 import { boxscorePlayer as BoxscorePlayer } from '@prisma/client';
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 
 import { ROSTER_KEYS } from '../../constants/nba.constants';
-import GamesModal from '../games-modal/games-modal';
+import GamesModal from './games-modal';
 
 const RosterCard: FC<any> = ({ rosterPlayer }) => {
   const [showModal, setShowModal] = useState(false);

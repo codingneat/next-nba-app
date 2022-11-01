@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: ['./app/**/*.{js,ts,jsx,tsx}', './pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
       sans: ['Montserrat', 'sans-serif'],
@@ -21,7 +21,7 @@ module.exports = {
           a100: 'var(--primary-a100)',
           a200: 'var(--primary-a200)',
           a400: 'var(--primary-a400)',
-          a700: 'var(--primary-a700)'
+          a700: 'var(--primary-a700)',
         },
         accent: {
           50: 'var(--accent-50)',
@@ -37,7 +37,7 @@ module.exports = {
           a100: 'var(--accent-a100)',
           a200: 'var(--accent-a200)',
           a400: 'var(--accent-a400)',
-          a700: 'var(--accent-a700)'
+          a700: 'var(--accent-a700)',
         },
         warn: {
           50: 'var(--warn-50)',
@@ -53,7 +53,7 @@ module.exports = {
           a100: 'var(--warn-a100)',
           a200: 'var(--warn-a200)',
           a400: 'var(--warn-a400)',
-          a700: 'var(--warn-a700)'
+          a700: 'var(--warn-a700)',
         },
         contrast: {
           50: 'var(--contrast-50)',
@@ -69,13 +69,13 @@ module.exports = {
           a100: 'var(--contrast-a100)',
           a200: 'var(--contrast-a200)',
           a400: 'var(--contrast-a400)',
-          a700: 'var(--contrast-a700)'
+          a700: 'var(--contrast-a700)',
         },
         gray: {
-          50: 'var(--body-bg)'
-        }
-      }
-    }
+          50: 'var(--body-bg)',
+        },
+      },
+    },
   },
   plugins: [],
 };

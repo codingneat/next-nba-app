@@ -5,6 +5,9 @@ const nextConfig = {
   images: {
     domains: ['ak-static.cms.nba.com'],
   },
-}
+  experimental: {
+    appDir: true,
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

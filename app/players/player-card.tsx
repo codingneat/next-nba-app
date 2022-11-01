@@ -1,3 +1,4 @@
+'use client';
 
 import Image, { StaticImageData } from 'next/image';
 import { FC, useState } from 'react';
@@ -19,7 +20,7 @@ const PlayerCard: FC<any> = ({ playerDetail }) => {
             setImgSrc(playerImage);
           }}
           alt={`${playerDetail?.player?.firstName} ${playerDetail?.player?.lastName} Photo`}
-          layout="fill"
+          fill
         />
       </div>
       <div className="flex flex-col p-1 leading-normal w-full items-center justify-between">

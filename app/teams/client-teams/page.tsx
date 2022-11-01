@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+'use client';
 
-import TeamsTable from '../../components/teams-table/teams-table';
+import { FC, useEffect, useState } from 'react';
 
-import type { NextPage } from 'next';
-import { Team } from '../../types/nba.types';
+import { Team } from '../../../types/nba.types';
+import TeamsTable from '../teams-table';
 
-const ClientTeams: NextPage = () => {
+const ClientTeams: FC = () => {
   const [teams, setTeams] = useState<Team[]>([]);
 
   useEffect(() => {
