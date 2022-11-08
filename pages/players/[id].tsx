@@ -24,7 +24,7 @@ const prisma = new PrismaClient();
 export const getStaticPaths = async () => {
   const players = await prisma.player.findMany({
     select: { id: true },
-    // where: { country: 'Canada' },
+    where: { country: 'Canada' },
   });
 
   return {

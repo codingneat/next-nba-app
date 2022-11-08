@@ -19,5 +19,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     where: { playerId: +playerId, game: season ? { seasonYear: +season } : {} },
   });
 
-  res.status(200).json(games.filter(game => game.min !== null));
+  return res.status(200).json(games.filter(game => game.min !== null));
 }
